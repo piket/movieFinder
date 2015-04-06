@@ -1,0 +1,76 @@
+.poster {
+    border: 1px solid black;
+}
+
+.fresh {
+    font-weight: bold;
+    color: tomato;
+}
+
+.rotten {
+    font-weight: bold;
+    color: yellowgreen;
+}
+
+.certified {
+    font-weight: bold;
+    background-color: gold;
+    color: tomato;
+}
+
+.highlight {
+    font-weight: bold;
+    color: darkblue;
+}
+
+.title {
+    font-style: italic;
+}
+
+p {
+    font-size: 120%;
+}
+
+.glyphicon-star {
+    color: yellow;
+    text-shadow: 2px 2px 2px black;
+    font-size: 200%;
+}
+
+.glyphicon-star-empty {
+    color: grey;
+    text-shadow: 2px 2px 2px black;
+    font-size: 200%;
+}
+
+.favorited {
+    font-style: italic;
+    color: blue;
+    font-size: 100%;
+}
+
+.numbering {
+    padding-right: 30px;
+}
+
+.img-responsive {
+    max-width: 300px;
+}
+
+.deleteBtn {
+    margin-top: 60px;
+}
+
+.thumbnail {
+    max-width: 100px;
+    display: inline-block;
+    margin: 0;
+}
+
+.fav-text {
+    padding-left: 40px;
+}
+
+ul.list-group:nth-child(even) {
+    background-color: #ffffff;
+}

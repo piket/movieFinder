@@ -1,0 +1,55 @@
+<% include partials/header %>
+
+<% var limit = 20; %>
+
+    <% if (error) { %>
+        <h4 class="text-center">Connection error, please try search again: <a href="/movies?q=<%=q%>"><%= q %></a></h4>
+    <% } else if (Search.length < 1) { %>
+        <h4 class="text-center">No results for: <%= q %></h4>
+    <% } else { %>
+    <div class="row">
+    <h4 class="text-center">Showing results for: <%= q %>, <%=Search.length%> total</h4>
+    </div>
+    <div class="row">
+    <div class="list-group col-sm-4 col-sm-offset-4">
+    <% for (var i = (page-1)*limit; i < (Search.length > limit ? ((page-1)*limit + limit): Search.length); i++) { %>
+    <% if (Search[i] !== undefined && Search[i].Year !== 'in development') { %>
+    <a href="/movies/<%= Search[i].imdbID %>" class="list-group-item" ><span class="numbering"><%=i + 1%></span><%= Search[i].Title %><span class="pull-right"><%= Search[i].Year %></span></a>
+         <%}%>
+      <%}%>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+<% if(Search.length > limit) { %>
+<nav>
+  <ul class="pagination">
+      <% if (page > 1) { %>
+    <li>
+      <a href="/movies?q=<%=q%>&amp;p=<%=page - 1%>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+      <% } %>
+    <% for (var p = 0; p < Search.length/limit; p++) { %>
+      <% if (p === page - 1) { %>
+        <li class="disabled"><a href=""><%=p + 1%></a></li>
+      <% } else { %>
+        <li><a href="/movies?q=<%=q%>&amp;p=<%=p + 1%>"><%=p + 1%></a></li>
+      <% } %>
+    <% } %>
+      <% if (page < Search.length/limit) { %>
+    <li>
+      <a href="/movies?q=<%=q%>&amp;p=<%=page + 1%>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+      <% } %>
+  </ul>
+</nav>
+<% } %>
+</div>
+</div>
+<% } %>
+<% include partials/footer %>

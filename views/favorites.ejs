@@ -1,0 +1,59 @@
+<% include partials/header %>
+
+<% var limit = 5; %>
+
+<h2 class="text-center">Your Favorites</h2>
+<div class="list-group col-sm-4 col-sm-offset-4">
+    <div class="fav-list">
+    <% for (var i = (page-1)*limit; i < (favs.length > limit ? ((page-1)*limit + limit): favs.length); i++) { %>
+        <% if(favs[i] === undefined) break; %>
+        <div class="row">
+            <div class="col-sm-11">
+                <a href="/movies/<%=favs[i].imdbid%>" class="list-group-item"><img src=<%=favs[i].poster%> class="thumbnail"><span class="fav-text"><%=favs[i].title%>, <em><%= favs[i].year %></em></span></a>
+            </div>
+            <div class="col-sm-1">
+                <form action="/favorites/delete" method="post">
+                    <input type="hidden" name="id" value="<%=favs[i].id%>">
+                    <input type="button" value="X" class="btn btn-sm btn-danger deleteBtn" data="<%=favs[i].title%>">
+                </form>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+<div id="dialog" title="Confirm Deletion">
+    <p></span>Did you want to delete <em id="dialog-title"></em> from your favorites?</p>
+</div>
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+<% if(favs.length > limit) { %>
+<nav>
+  <ul class="pagination">
+      <% if (page > 1) { %>
+    <li>
+      <a href="/favorites?p=<%=page - 1%>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+      <% } %>
+    <% for (var p = 0; p < favs.length/limit; p++) { %>
+      <% if (p === page - 1) { %>
+        <li class="disabled"><a href=""><%=p + 1%></a></li>
+      <% } else { %>
+        <li><a href="/favorites?p=<%=p + 1%>"><%=p + 1%></a></li>
+      <% } %>
+    <% } %>
+      <% if (page < favs.length/limit) { %>
+    <li>
+      <a href="/favorites?p=<%=page + 1%>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+      <% } %>
+  </ul>
+</nav>
+<% } %>
+</div>
+</div>
+<% include partials/footer %>
