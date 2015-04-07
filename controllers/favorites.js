@@ -8,9 +8,9 @@ var db = require('../models');
 router.use(bodyParser.urlencoded({extended:false}));
 
 router.get('/',function(req,res) {
-    db.favorite.findAll().then(function(favs){
+    db.favorite.findAll({order: 'id DESC'}).then(function(favs){
         // res.send(favs);
-        res.render('favorites',{favs:favs,page:parseInt(req.query.p) || 1});
+        res.render('favorites',{favs:favs});
     });
 });
 
