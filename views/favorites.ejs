@@ -12,10 +12,7 @@
                 <a href="/movies/<%=favs[i].imdbid%>" class="list-group-item"><img src=<%=favs[i].poster%> class="thumbnail"><span class="fav-text"><%=favs[i].title%>, <em><%= favs[i].year %></em></span></a>
             </div>
             <div class="col-sm-1">
-                <form action="/favorites/delete" method="post">
-                    <input type="hidden" name="id" value="<%=favs[i].id%>">
-                    <input type="button" value="X" class="btn btn-sm btn-danger deleteBtn" data="<%=favs[i].title%>">
-                </form>
+                <button class="btn btn-sm btn-danger deleteBtn" data="<%=favs[i].title%>" id="<%=favs[i].id%>">X</button>
             </div>
         </div>
         <% } %>

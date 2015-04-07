@@ -66,7 +66,8 @@ router.get('/:imdbId',function(req,res) {
                 if (movie !== null) {
                     var faved = true;
                 }
-                res.render('show',{data:JSON.parse(data),faved:faved});
+                console.log("faved:",faved);
+                res.render('show',{data:JSON.parse(data),faved:faved,id:movie.id});
                 // res.send(JSON.parse(data));
             }).catch(function(){
                 res.render('show',{data:JSON.parse(data),faved:false});

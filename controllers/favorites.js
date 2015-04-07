@@ -22,14 +22,15 @@ router.post('/save',function(req,res) {
             fav.poster = req.body.poster;
             fav.save();
         }
-        res.redirect('/favorites');
+        console.log(fav.id);
+        res.send({id:fav.id});
     });
 });
 
-router.post('/delete',function(req,res) {
+router.delete('/:id',function(req,res) {
     // res.send(req.body);
-    db.favorite.destroy({where: {id: parseInt(req.body.id)}}).then(function(){
-        res.redirect('/favorites');
+    db.favorite.destroy({where: {id: req.params.id}}).then(function(){
+        res.send('removed from favorites');
     });
 })
 
