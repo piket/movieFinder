@@ -46,7 +46,7 @@ $(function(){
                 // console.log("new page:",page);
             }
             $(pageBtnList).eq(pageBtnList.length-1).remove();
-            $(pageBtnList).eq(pageBtnList.length-2).parent().addClass('disabled');
+            // $(pageBtnList).eq(pageBtnList.length-2).parent().addClass('disabled');
         }
 
         favList.each(function(idx,item){
