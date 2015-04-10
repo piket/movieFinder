@@ -2,18 +2,24 @@
 
 <% var limit = 5; %>
 
+<% if(tag !== false) { %>
+<h2 class="text-center">Your Favorites with the tag <b><%=tag%></b></h2>
+<% } else { %>
 <h2 class="text-center">Your Favorites</h2>
+<% } %>
 <div class="list-group col-sm-4 col-sm-offset-4">
     <div class="fav-list-group">
     <% for (var i = 0; i < favs.length; i++) { %>
         <% if(favs[i] === undefined) break; %>
         <div class="row fav-list">
-            <div class="col-sm-11">
+            <div class="col-sm-12 favMovie">
                 <a href="/movies/<%=favs[i].imdbid%>" class="list-group-item"><img src=<%=favs[i].poster%> class="thumbnail"><span class="fav-text"><%=favs[i].title%>, <em><%= favs[i].year %></em></span></a>
-            </div>
-            <div class="col-sm-1">
                 <button class="btn btn-sm btn-danger deleteBtn" data="<%=favs[i].title%>" id="<%=favs[i].id%>">X</button>
+                <a class="btn btn-sm btn-success tagBtn" href="/movies/<%=favs[i].imdbid%>/addtag">Add Tags</a>
+                <a class="btn btn-sm btn-info commentBtn" href="/movies/<%=favs[i].imdbid%>#commentText">Comments<%=favs[i].comments !== undefined && (favs[i].comments.length > 0) ? ' ('+favs[i].comments.length+')':''%></a>
             </div>
+            <!-- <div class="col-sm-1">
+            </div> -->
         </div>
         <% } %>
     </div>

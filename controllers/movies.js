@@ -21,10 +21,10 @@ router.get('/',function(req,res){
             $('td.result_text').each(function(idx,item){
                 var href = $('a',item).attr('href').substr(7);
                 href = href.substring(0,href.indexOf('/'));
-                var title = $(item).text().substr(0,$(item).text().indexOf('(')).trim();
+                var title = $(item).children('a').text().trim();
                 var year = $(item).text().substring($(item).text().indexOf('(')+1,$(item).text().indexOf(')')).trim();
 
-                if (year !== "in development")
+                if (year !== "in development" && year !== "")
                     results.push({imdbID:href,Title:title,Year:year});
             }).get();
             console.log("...scrape complete")
@@ -61,16 +61,48 @@ router.get('/:imdbId',function(req,res) {
     request(url,function(error,response,data){
         if (!error && response.statusCode == 200) {
             // res.send(data);
-            db.favorite.find({where:{imdbid:req.params.imdbId}}).then(function(movie){
+            db.favorite.find({where:{imdbid:req.params.imdbId}, include: [db.comment,db.tag]}).then(function(movie){
                 var faved = false;
                 if (movie !== null) {
                     var faved = true;
                 }
-                console.log("faved:",faved);
-                res.render('show',{data:JSON.parse(data),faved:faved,id:movie.id});
+                var comments = movie.comments || [];
+                var tags = movie.tags || [];
+                console.log("faved:",faved,"comments",comments);
+                // res.send(JSON.parse(data));
+                res.render('show',{data:JSON.parse(data),faved:faved,id:movie.id,comments:comments,tags:tags,add:false});
                 // res.send(JSON.parse(data));
             }).catch(function(){
-                res.render('show',{data:JSON.parse(data),faved:false});
+                res.render('show',{data:JSON.parse(data),faved:false,id:"",comments:[],tags:[],add:false});
+            })
+        }
+            else {
+                res.render('show',{error:true,imdbId:req.params.imdbId})
+                console.log("connection error")
+            }
+    });
+    // res.send(req.params);
+});
+
+router.get('/:imdbId/addtag',function(req,res) {
+    var url = "http://www.omdbapi.com/?i=" + req.params.imdbId + "&tomatoes=true&plot=full";
+
+    request(url,function(error,response,data){
+        if (!error && response.statusCode == 200) {
+            // res.send(data);
+            db.favorite.find({where:{imdbid:req.params.imdbId}, include: [db.comment,db.tag]}).then(function(movie){
+                var faved = false;
+                if (movie !== null) {
+                    var faved = true;
+                }
+                var comments = movie.comments || [];
+                var tags = movie.tags || [];
+                console.log("faved:",faved,"comments",comments);
+                // res.send(JSON.parse(data));
+                res.render('show',{data:JSON.parse(data),faved:faved,id:movie.id,comments:comments,tags:tags,add:true});
+                // res.send(JSON.parse(data));
+            }).catch(function(){
+                res.render('show',{data:JSON.parse(data),faved:false,id:"",comments:[],tags:[],add:true});
             })
         }
             else {

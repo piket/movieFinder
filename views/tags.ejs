@@ -1,0 +1,9 @@
+<% include ./partials/header %>
+
+<div class="jumbotron col-sm-6 col-sm-offset-3">
+    <% for(var i = 0; i < tags.length; i++) { %>
+        <a href="/favorites/<%=tags[i].name.replace(/ /g,'+')%>" class="btn btn-default btn-xs" style="font-size:<%=100+((tags[i].favorites.length)*10)%>%"><%=tags[i].name%></a>
+    <% } %>
+</div>
+
+<% include ./partials/footer %>

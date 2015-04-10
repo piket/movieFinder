@@ -1,12 +1,14 @@
 var express = require('express');
 var moviesCtrl = require('./controllers/movies');
 var favoritesCtrl = require('./controllers/favorites');
+var tagsCtrl = require('./controllers/tags');
 var app = express();
 
 app.set('view engine','ejs');
 
 app.use('/movies',moviesCtrl);
 app.use('/favorites',favoritesCtrl);
+app.use('/tag',tagsCtrl);
 
 app.use(express.static(__dirname + '/public'));
 

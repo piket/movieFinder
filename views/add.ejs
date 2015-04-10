@@ -1,0 +1,16 @@
+<% include partials/header %>
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+    <form action="/tag/add" id="addTag">
+            <div class="form-group">
+                <input type="text" placeholder="Enter a tag" class="form-control" name="tagtext" id="tagtext">
+                <input type="hidden" value="<%=title%>" id="movieTitle" name="title">
+                <input type="hidden" value="<%=id%>" name="id">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Tag to <em><%=title%></em></button>
+        </form>
+        <p id="alert"></p>
+    </div>
+</div>
+
+<% include partials/footer %>

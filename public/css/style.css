@@ -58,7 +58,32 @@ p {
 }
 
 .deleteBtn {
-    margin-top: 60px;
+    /*margin-top: 30px;*/
+    position: absolute;
+    top: 3px;
+    right: 18px;
+    display: none;
+}
+
+.tagBtn {
+    position: absolute;
+    bottom: 3px;
+    right: 18px;
+    display: none;
+}
+
+.addTagBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+}
+
+.commentBtn {
+    position: absolute;
+    bottom: 3px;
+    right: 98px;
+    display: none;
 }
 
 .thumbnail {
@@ -73,4 +98,9 @@ p {
 
 ul.list-group:nth-child(even) {
     background-color: #ffffff;
+}
+
+div.jumbotron {
+    position: relative;
+    padding: 10px 10px 30px 10px;
 }

@@ -4,85 +4,126 @@
 <h4 class="text-center">Connection error, please try again: <a href="/movies/<%=imdbId%>">Reload</a>
     <% } else { %>
     <div class="row">
-    <div class="col-sm-4">
-                        <% if (faved) { %>
-                        <form action="/favorites/<%=id%>" class="remove-fav">
-                        <%}else { %>
-                        <form action="/favorites/" class="remove-fav">
-                        <%}%>
-                        <input type="submit" class="btn btn-sm btn-danger removeBtn pull-right" value="Remove from Favorites" style="display:<%=faved ? 'inline':'none'%>">
-                        </form>
+        <div class="col-sm-4">
+            <% if (faved) { %>
+            <form action="/favorites/<%=id%>" class="remove-fav">
+                <%}else { %>
+                <form action="/favorites/" class="remove-fav">
+                    <%}%>
+                    <input type="submit" class="btn btn-sm btn-danger removeBtn pull-right btn-lg" value="Remove from Favorites" style="display:<%=faved ? 'inline':'none'%>">
+                </form>
 
-                        <form action="/favorites/save" class="add-fav">
-                            <input type="submit" value="Add to Favorites" class="btn btn-warning pull-right favBtn" style="display:<%=faved ? 'none':'inline'%>">
-                            <input type="hidden" name="id" value="<%=data.imdbID%>" id="movieId">
-                            <input type="hidden" name="title" value="<%=data.Title%>" id="movieTitle">
-                            <input type="hidden" name="year" value="<%=data.Year%>">
-                            <input type="hidden" name="poster" value="<%=data.Poster%>">
-                        </form>
-                        </div>
-                        <div class="col-sm-4">
-    <h2 class="text-center title"><%= data.Title %></h2>
-    </div>
-    </div>
-    <div class="row">
-    <hr>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-            <div class="row">
+                <form action="/favorites/save" class="add-fav">
+                    <input type="submit" value="Add to Favorites" class="btn btn-warning pull-right favBtn btn-lg" style="display:<%=faved ? 'none':'inline'%>">
+                    <input type="hidden" name="id" value="<%=data.imdbID%>" id="movieId">
+                    <input type="hidden" name="title" value="<%=data.Title%>" id="movieTitle">
+                    <input type="hidden" name="year" value="<%=data.Year%>">
+                    <input type="hidden" name="poster" value="<%=data.Poster%>">
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <h2 class="text-center title"><%= data.Title %></h2>
+            </div>
+        </div>
+        <div class="row">
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <% if(data.Poster === 'N/A') { %>
-                        <h4>No image avaliable</h4>
-                        <% } else { %>
-                        <img src=<%= data.Poster %> class="poster center-block">
-                        <% } %>
-                        <% if (data.Metascore !== 'N/A' && data.imdbRating !== 'N/A' && data.tomatoMeter !== 'N/A') { %>
-                        <h5>Ratings:</h5>
-                        <% if (data.Metascore !== 'N/A') { %>
-                        <h6>Metascore: <%= data.Metascore %>/100</h6>
-                        <% } %>
-                        <% if (data.imdbRating !== 'N/A') { %>
-                        <h6>IMDB Rating: <%= data.imdbRating %>/10<br>
-                            <% for (var x = 1; x <= 10; x++) { %>
-                            <% if (x <= Math.round(data.imdbRating)) { %>
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <% if(data.Poster === 'N/A') { %>
+                            <h4>No image avaliable</h4>
                             <% } else { %>
-                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            <img src=<%= data.Poster %> class="poster center-block">
+                            <% } %>
+                            <% if (data.Metascore !== 'N/A' && data.imdbRating !== 'N/A' && data.tomatoMeter !== 'N/A') { %>
+                            <h5>Ratings:</h5>
+                            <% if (data.Metascore !== 'N/A') { %>
+                            <h6>Metascore: <%= data.Metascore %>/100</h6>
+                            <% } %>
+                            <% if (data.imdbRating !== 'N/A') { %>
+                            <h6>IMDB Rating: <%= data.imdbRating %>/10<br>
+                                <% for (var x = 1; x <= 10; x++) { %>
+                                <% if (x <= Math.round(data.imdbRating)) { %>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <% } else { %>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                <% } %>
+                                <% } %>
+                            </h6>
+                            <% } %>
+                            <% if (data.tomatoMeter !== 'N/A') { %>
+                            <h6>Tomato Meter: <span class=<%= data.tomatoImage%>><%= data.tomatoMeter %>%</span></h6>
                             <% } %>
                             <% } %>
-                        </h6>
-                        <% } %>
-                        <% if (data.tomatoMeter !== 'N/A') { %>
-                        <h6>Tomato Meter: <span class=<%= data.tomatoImage%>><%= data.tomatoMeter %>%</span></h6>
-                        <% } %>
-                        <% } %>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="row">
-                            <h4 class="col-sm-6"><span class="highlight">Released:</span> <%= data.Released %></h4><h4 class="col-sm-6"><span class="highlight">Rated:</span> <%= data.Rated %></h4>
+                            <% if (tags.length > 0) { %>
+                            <div class="jumbotron">
+                                <h6>Tags</h6>
+                                <% tags.forEach(function(tag) { %>
+                                    <a href="/favorites/<%=tag.name.replace(/ /g,'+')%>" class="btn btn-default"><%=tag.name%></a>
+                                <% }); %>
+                                <a href="#" class="addTagBtn btn btn-success" id="addATag">+</a>
+                            </div>
+
+    <form action="/tag/add" id="tagForm" style="display:<%=add?'inline-block':'none'%>">
+            <div class="form-group">
+                <input type="text" placeholder="Enter a tag" class="form-control" name="tagtext" id="tagtext">
+                <input type="hidden" value="<%=data.Title%>" id="movieTitle" name="title">
+                <input type="hidden" value="<%=id%>" name="id">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Tag</button>
+        </form>
+                            <% } %>
+
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <h4 class="col-sm-6"><span class="highlight">Released:</span> <%= data.Released %></h4><h4 class="col-sm-6"><span class="highlight">Rated:</span> <%= data.Rated %></h4>
+                            </div>
+                            <div class="row">
+                                <h4 class="col-sm-12"><span class="highlight">Director:</span> <%= data.Director %></h4>
+                            </div>
+                            <div class="row">
+                                <h4 class="col-sm-12"><span class="highlight">Writer:</span> <%= data.Writer %></h4>
+                            </div>
+                            <div class="row">
+                                <hr>
+                                <p class="col-sm-12"><span class="highlight">Plot Synopsis:</span> <%= data.Plot %></p>
+                                <p class="col-sm-12"><span class="highlight">Actors:</span> <%= data.Actors %></p>
+                                <p class="col-sm-6"><span class="highlight">Genre:</span> <%= data.Genre %></p><p class="col-sm-6"><span class="highlight">Runtime:</span> <%= data.Runtime %></p>
+                                <p class="col-sm-12"><span class="highlight">Critic Consensus:</span> <%= data.tomatoConsensus %></p>
+                            </div>
                         </div>
                         <div class="row">
-                            <h4 class="col-sm-12"><span class="highlight">Director:</span> <%= data.Director %></h4>
-                        </div>
-                        <div class="row">
-                            <h4 class="col-sm-12"><span class="highlight">Writer:</span> <%= data.Writer %></h4>
-                        </div>
-                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                            <br>
                             <hr>
-                            <p class="col-sm-12"><span class="highlight">Plot Synopsis:</span> <%= data.Plot %></p>
-                            <p class="col-sm-12"><span class="highlight">Actors:</span> <%= data.Actors %></p>
-                            <p class="col-sm-6"><span class="highlight">Genre:</span> <%= data.Genre %></p><p class="col-sm-6"><span class="highlight">Runtime:</span> <%= data.Runtime %></p>
-                            <p class="col-sm-12"><span class="highlight">Critic Consensus:</span> <%= data.tomatoConsensus %></p>
+                            <h4 class="text-center highlight">Comments</h4>
+                                <ul class="list-group comments">
+                                <% if (comments.length > 0) { %>
+                                    <% for(var i = comments.length - 1; i >= 0; i--) { %>
+                                    <li class="list-group-item"><%=comments[i].text%></li>
+                                    <% } %>
+                                <% } %>
+                                </ul>
+                                <hr>
+                                <h4 class="highlight">Enter a comment</h4>
+                                <form action="/favorites/<%=id%>/comments/add" id="commentForm">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="text" id="commentText"></textarea>
+                                    </div>
+                                    <input type="submit" value="Submit Comment" id="commentBtn" class="btn btn-default">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <% } %>
+            <% } %>
 
-<div id="dialog" title="Confirm Deletion">
-    <p></span>Did you want to delete <em id="dialog-title"></em> from your favorites?</p>
-</div>
-        <% include partials/footer %>
+            <div id="dialog" title="Confirm Deletion">
+                <p></span>Did you want to delete <em id="dialog-title"></em> from your favorites?</p>
+            </div>
+            <% include partials/footer %>

@@ -52,9 +52,11 @@ $(function(){
         favList.each(function(idx,item){
             if (idx >= (page - 1)*limit && idx < ((page - 1)*limit + limit)) {
                 $(item).css({display:'inline'});
+                // $(item).slideDown('slow');
             }
             else {
                 $(item).css({display:'none'});
+                // $(item).slideUp('slow');
             }
         });
 
@@ -65,7 +67,7 @@ $(function(){
             $('#previous').show();
         }
 
-        if ($('#next').attr('href') > favList.length/limit) {
+        if ($('#next').attr('href') > Math.ceil(favList.length/limit)) {
             $('#next').hide();
         }
         else {
@@ -159,4 +161,65 @@ $('#next').click(function(e){
     //     if(!Window.confirm("Are you sure you want to delete " + title + " from your favorites?")) {
     //         e.preventDefault();
     //     }
+    if ($('#tagtext')) {
+        $('#tagtext').focus();
+    }
+
+    $('#addTag').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            method: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize()
+        });
+        $('#alert').text($('#tagtext').val() + ' has been added to ' + $('#movieTitle').val()).show();
+        $('#tagtext').val('');
+    });
+
+    $('#commentForm').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize()
+        }).done(function(data) {
+            $('.comments').append('<li class="list-group-item">'+data.text+'</li>');
+            $('#commentText').val('');
+        });
+    });
+
+    $('.favMovie').hover(function(e){
+        $(this).children('.btn').slideDown();
+    }, function(e) {
+        $(this).children('.btn').slideUp();
+    })
+
+    $('.jumbotron').hover(function(e){
+        $(this).children('.addTagBtn').slideDown();
+    }, function(e) {
+        $(this).children('.addTagBtn').slideUp();
+    })
+
+    $('#addATag').click(function(e) {
+        console.log("+ btn clicked")
+        e.preventDefault();
+        $('#tagForm').slideDown();
+    });
+
+    $('#tagForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            method: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize()
+        }).done(function(tag) {
+            $('.jumbotron').append('<a href="/favorites/'+tag.name.replace(/ /g,'+')+'" class="btn btn-default">'+tag.name+'</a>')
+            $('#tagtext').val('');
+            $('#tagForm').slideUp();
+        });
+        // $('#alert').text($('#tagtext').val() + ' has been added to ' + $('#movieTitle').val()).show();
+    });
+
 });
